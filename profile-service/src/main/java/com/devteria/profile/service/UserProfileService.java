@@ -2,6 +2,7 @@ package com.devteria.profile.service;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.devteria.profile.dto.request.ProfileCreationRequest;
@@ -31,6 +32,7 @@ public class UserProfileService {
         return mapper.toUserProfileResponse(userProfile);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public List<UserProfileResponse> getUsersProfile() {
         return userProfileRepository.findAll().stream()
                 .map(mapper::toUserProfileResponse)
